@@ -1,0 +1,104 @@
+C51 COMPILER V9.60.0.0   MG82F6D17_COMMON_DRV                                              01/25/2022 14:59:16 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MG82F6D17_COMMON_DRV
+OBJECT MODULE PLACED IN .\Objects\MG82F6D17_COMMON_DRV.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\Driver\Source\MG82F6D17_COMMON_DRV.c OPTIMIZE(8,SPEED) BROWSE INC
+                    -DIR(.\Source;.\Source\Driver\Include;.\Source\Driver\Source;.\Source\Middleware\Include;.\Source\Middleware\Source) DEBU
+                    -G OBJECTEXTEND PRINT(.\Listings\MG82F6D17_COMMON_DRV.lst) TABS(2) OBJECT(.\Objects\MG82F6D17_COMMON_DRV.obj)
+
+line level    source
+
+   1          /**
+   2           ******************************************************************************
+   3           *
+   4           * @file        MG82F6D17_COMMON_DRV.c
+   5           *
+   6           * @brief       This is the C code format driver file.
+   7           *
+   8           * @par         Project
+   9           *              MG82F6D17
+  10           * @version     V0.03
+  11           * @date        2020/01/22
+  12           * @author      Megawin Software Center
+  13           * @copyright   Copyright (c) 2019 MegaWin Technology Co., Ltd.
+  14           *              All rights reserved.
+  15           *
+  16           ******************************************************************************
+  17           * @par         Disclaimer 
+  18           *      The Demo software is provided "AS IS" without any warranty, either 
+  19           *      expressed or implied, including, but not limited to, the implied warranties 
+  20           *      of merchantability and fitness for a particular purpose.  The author will 
+  21           *      not be liable for any special, incidental, consequential or indirect 
+  22           *      damages due to loss of data or any other reason. 
+  23           *      These statements agree with the worldwide and local dictated laws about 
+  24           *      authorship and violence against these laws. 
+  25           ******************************************************************************
+  26           ******************************************************************************
+  27           */ 
+  28           
+  29          /// @cond __DRV_COMMON_C_Without_Doxygen
+  30          #include "MG82F6D17_CONFIG.h"
+  31          
+  32          void DRV_PageP_Write(uint8_t ADDR, uint8_t DATA)
+  33          {
+  34   1          ISPCR |= ISPEN;
+  35   1          IFMT = IFMT_PAGE_P_WRITE;
+  36   1          IFADRH = 0;
+  37   1          IFADRL = ADDR;
+  38   1          IFD = DATA;
+  39   1          SCMD = 0x46;
+  40   1          SCMD = 0xB9;
+  41   1          IFMT = IFMT_STANDBY;
+  42   1          ISPCR &= ~ISPEN;
+  43   1      }
+  44          
+  45          uint8_t DRV_PageP_Read(uint8_t ADDR)
+  46          {
+  47   1          ISPCR |= ISPEN;
+  48   1          IFMT   = IFMT_PAGE_P_READ;
+  49   1          IFADRH = 0;
+  50   1          IFADRL = ADDR;
+  51   1          SCMD   = 0x46;
+  52   1          SCMD   = 0xB9;
+  53   1          IFMT   = IFMT_STANDBY;
+C51 COMPILER V9.60.0.0   MG82F6D17_COMMON_DRV                                              01/25/2022 14:59:16 PAGE 2   
+
+  54   1          ISPCR  &= ~ISPEN;
+  55   1          return IFD;
+  56   1      }
+  57          
+  58          #if MG82F6D17_PageP_WITHOUT_IT_WIZARD
+              void DRV_PageP_WriteWithoutIT(uint8_t ADDR, uint8_t DATA)
+              {
+                  _push_(IE);
+                  EA = 0;
+                  DRV_PageP_Write(ADDR, DATA);
+                  _pop_(IE);
+              }
+              
+              uint8_t DRV_PageP_ReadWithoutIT(uint8_t ADDR)
+              {
+                  _push_(IE);
+                  EA = 0;
+                  DRV_PageP_Read(ADDR);
+              //    IFD_BUF = IFD;
+                  _pop_(IE);
+                  return IFD;
+              }
+              #endif
+  77          /// @endcond
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

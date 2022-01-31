@@ -1,0 +1,144 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              01/25/2022 20:28:30 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\MAIN.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\MAIN.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Source;.\Source\Driver\I
+                    -nclude;.\Source\Driver\Source;.\Source\Middleware\Include;.\Source\Middleware\Source) DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\MAIN.lst) TABS(2) OBJECT(.\Objects\MAIN.obj)
+
+line level    source
+
+   1          /*********************************************************************
+   2              Project:MG82F6D17-DEMO
+   3              Author:Debashis
+   4                MG82F6D17 SSOP20
+   5                CpuCLK=12MHz, SysCLK=12MHz
+   6              Description:
+   7                  IO Mode 
+   8              Note:
+   9          
+  10              Creat time::
+  11              Modify::
+  12              
+  13          *********************************************************************/
+  14          #include "MG82F6D17_CONFIG.h" // Add in the config header otherwise the code will not compile
+  15          
+  16          #define MCU_SYSCLK    12000000  //we define the internal clock frequency
+  17          #define MCU_CPUCLK    (MCU_SYSCLK) // this stateent is internally excuted inside the library and sets the cl
+             -ock to 12MHz
+  18          #define LED_PIN   P34 // We define the P3.4 pin as Led Pin (We have connected an LED on this pin)
+  19          
+  20          
+  21          /**
+  22           an workaround for delay in the system as its provided by megawin themself 
+  23           this statement takes in one 8-bit unsifgend number and depending upon the clock frequency 
+  24           executes a certain number of NOP's to make an jely bean delay
+  25           
+  26          Function:       void DelayXms(u16 xMs)
+  27          Description:    dealy£¬unit:ms
+  28          Input:          u16 xMs -> *1ms  (1~65535)
+  29          Output: 
+  30           
+  31          **/
+  32          void DelayXus(u8 xUs) //
+  33          {
+  34   1        while(xUs!=0)
+  35   1        {
+  36   2      #if (MCU_CPUCLK>=11059200)
+  37   2          _nop_();
+  38   2      #endif
+  39   2      #if (MCU_CPUCLK>=14745600)
+                  _nop_();
+                  _nop_();
+                  _nop_();
+                  _nop_();
+              #endif
+  45   2      #if (MCU_CPUCLK>=16000000)
+                  _nop_();
+              #endif
+  48   2      
+  49   2      #if (MCU_CPUCLK>=22118400)
+                  _nop_();
+                  _nop_();
+                  _nop_();
+C51 COMPILER V9.60.0.0   MAIN                                                              01/25/2022 20:28:30 PAGE 2   
+
+                  _nop_();
+                  _nop_();
+                  _nop_();
+              #endif
+  57   2      #if (MCU_CPUCLK>=24000000)
+                  _nop_();
+                  _nop_();
+              #endif    
+  61   2      #if (MCU_CPUCLK>=29491200)
+                  _nop_();
+                  _nop_();
+                  _nop_();
+                  _nop_();
+                  _nop_();
+                  _nop_();
+              #endif
+  69   2      #if (MCU_CPUCLK>=32000000)
+                  _nop_();
+                  _nop_();
+              #endif
+  73   2      
+  74   2          xUs--;
+  75   2        }
+  76   1      }
+  77          
+  78          /*************************************************
+  79          
+  80          this DelayXms call the previous DelayXus a certin number of time in order to virtully
+  81          make that amout of dely.
+  82          
+  83          Function:       void DelayXms(u16 xMs)
+  84          Description:    dealy£¬unit:ms
+  85          Input:          u16 xMs -> *1ms  (1~65535)
+  86          Output:     
+  87          *************************************************/
+  88          void DelayXms(u16 xMs)
+  89          {
+  90   1        while(xMs!=0)
+  91   1        {
+  92   2          DelayXus(200);//  when this function is called the first function in the DelayXus gets executed. 
+  93   2          DelayXus(200);
+  94   2          DelayXus(200);
+  95   2          DelayXus(200);
+  96   2          DelayXus(200);
+  97   2          xMs--; // run this loop until this function reaches zero
+  98   2        }
+  99   1      }
+ 100          
+ 101          
+ 102          void main ()
+ 103          {
+ 104   1          
+ 105   1          System_Init(); // Initilize the sysem that is required by internal process
+ 106   1      
+ 107   1          while(1)
+ 108   1          {
+ 109   2            LED_PIN = 0; // make the LEDpin low 
+ 110   2            DelayXms(1000); // Delay for 1S and 
+ 111   2            LED_PIN = 1; // Make the Led pin High
+ 112   2            DelayXms(1000); // Delay for 1S
+ 113   2          }
+ 114   1      }
+C51 COMPILER V9.60.0.0   MAIN                                                              01/25/2022 20:28:30 PAGE 3   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     63    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

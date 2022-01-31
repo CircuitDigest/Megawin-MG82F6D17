@@ -1,0 +1,292 @@
+C51 COMPILER V9.60.0.0   MG82F6D17_WIZARD                                                  01/25/2022 14:59:16 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MG82F6D17_WIZARD
+OBJECT MODULE PLACED IN .\Objects\MG82F6D17_WIZARD.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\Driver\Source\MG82F6D17_WIZARD.c OPTIMIZE(8,SPEED) BROWSE INCDIR(
+                    -.\Source;.\Source\Driver\Include;.\Source\Driver\Source;.\Source\Middleware\Include;.\Source\Middleware\Source) DEBUG OB
+                    -JECTEXTEND PRINT(.\Listings\MG82F6D17_WIZARD.lst) TABS(2) OBJECT(.\Objects\MG82F6D17_WIZARD.obj)
+
+line level    source
+
+   1          /**
+   2           ******************************************************************************
+   3           *
+   4           * @file        MG82F6D17_WIZARD.c
+   5           *
+   6           * @brief       This is a C code for Wizard interface.
+   7           *
+   8           * @par         Project
+   9           *              MG82F6D17
+  10           * @version     V0.03
+  11           * @date        2020/01/22
+  12           * @author      Megawin Software Center
+  13           * @copyright   Copyright (c) 2019 MegaWin Technology Co., Ltd.
+  14           *              All rights reserved.
+  15           *
+  16           ******************************************************************************
+  17           * @par         Disclaimer
+  18           *      The Demo software is provided "AS IS" without any warranty, either
+  19           *      expressed or implied, including, but not limited to, the implied warranties
+  20           *      of merchantability and fitness for a particular purpose.  The author will
+  21           *      not be liable for any special, incidental, consequential or indirect
+  22           *      damages due to loss of data or any other reason.
+  23           *      These statements agree with the worldwide and local dictated laws about
+  24           *      authorship and violence against these laws.
+  25           ******************************************************************************
+  26           ******************************************************************************
+  27           */
+  28          
+  29          /// @cond __DRV_Wizard_Without_Doxygen
+  30          //*** <<< Use Configuration Wizard in Context Menu >>> ***
+  31          
+  32          //<h> Initialize MG82F6D17 Drivers
+  33          //<i> The checked terms in this wizard will be initialized.
+  34          //      <q>System Clock
+  35          //      <i>  Check this term, then macros __DRV_CLK_SystemClock_Wizard_Init() and __DRV_CLK_P60Mux_Wizard_
+             -Init()  will initialize system clock.
+  36                  #define MG82F6D17_CLK_WIZARD      0
+  37          
+  38          
+  39          //      <q>Watch Dog Timer(WDT)
+  40          //      <i> Check this term, then macro __DRV_WDT_Wizard_Init() will initialize WDT.
+  41                  #define MG82F6D17_WDT_WIZARD      0
+  42          
+  43          
+  44          //      <q>Real Time Clock(RTC)
+  45          //      <i> Check this term, then macro __DRV_Wizard_RTC_Init() will initialize RTC.
+  46                  #define MG82F6D17_RTC_WIZARD      0
+  47          
+  48          
+  49          //      <q>Brown-Out Detector(BODx)
+  50          //      <i> Check this term, then macro __DRV_BODx_Wizard_Init() will initialize BODx.
+  51                  #define MG82F6D17_BODx_WIZARD      0
+  52          
+C51 COMPILER V9.60.0.0   MG82F6D17_WIZARD                                                  01/25/2022 14:59:16 PAGE 2   
+
+  53          
+  54          //      <q> Global Interrupts
+  55          //      <i> Check this term if you want to enable interrupts.
+  56          //      <i> Then, please go to MG82F6D17_INTERRUPT.h to pick the interrupts you need. 
+  57          //      <i> Now __DRV_INTERRUPT_Wizard_Init() will help you initialize them.
+  58                  #define MG82F6D17_INT_ALL_WIZARD      0
+  59          
+  60          
+  61          //      <q>General Purpose Input/Output(GPIO)
+  62          //      <i> Check this term, then macro __DRV_GPIO_Wizard_Init() will initialize GPIO.
+  63                  #define MG82F6D17_GPIO_WIZARD      1
+  64          
+  65          
+  66          //      <q> Timers/Counters
+  67          //      <i> Initialize Timers/Counters.
+  68                  #define MG82F6D17_TIMER_COUNTER_WIZARD      0
+  69          //      
+  70          
+  71          //      <q>Serial Port 0 (UART0)
+  72          //      <i> Check this term, then DRV_UART0_Wizard_Init() will initialize UART0.
+  73                  #define MG82F6D17_UART0_WIZARD      0
+  74          
+  75          
+  76          
+  77          //      <q>Serial Port 1 (UART1)
+  78          //      <i> Check this term, then DRV_UART1_Wizard_Init() will initialize UART1.
+  79                  #define MG82F6D17_UART1_WIZARD      0
+  80          
+  81          
+  82          //      <q>ADC
+  83          //      <i>  Check this term, then macros __DRV_ADC_Wizard_Init() will initialize ADC.
+  84                  #define MG82F6D17_ADC_WIZARD      0
+  85          
+  86          //</h>
+  87          // <<< end of configuration section >>>
+  88          
+  89          
+  90          #include "MG82F6D17_CONFIG.h"
+  91          
+  92          
+  93          /**
+  94           *******************************************************************************
+  95           *
+  96           *
+  97           *
+  98           * System Initialization Function
+  99           *
+ 100           *
+ 101           *
+ 102           *******************************************************************************
+ 103           */
+ 104          
+ 105          void System_Init(void)
+ 106          {
+ 107   1          #if MG82F6D17_CLK_WIZARD
+                      __DRV_CLK_SystemClock_Wizard_Init();
+                      __DRV_CLK_P60Mux_Wizard_Init();
+                  #endif
+ 111   1      
+ 112   1          #if MG82F6D17_WDT_WIZARD
+                      __DRV_WDT_Wizard_Init();
+                  #endif
+C51 COMPILER V9.60.0.0   MG82F6D17_WIZARD                                                  01/25/2022 14:59:16 PAGE 3   
+
+ 115   1      
+ 116   1          #if MG82F6D17_RTC_WIZARD
+                      __DRV_RTC_Wizard_Init();
+                  #endif
+ 119   1      
+ 120   1          #if MG82F6D17_BODx_WIZARD
+                      __DRV_BODx_Wizard_Init();
+                  #endif
+ 123   1      
+ 124   1          #if MG82F6D17_GPIO_WIZARD
+ 125   1              __DRV_GPIO_Wizard_Init();
+ 126   1          #endif
+ 127   1      
+ 128   1          #if MG82F6D17_UART0_WIZARD
+                      DRV_UART0_Wizard_Init();
+                  #endif
+ 131   1          #if MG82F6D17_UART1_WIZARD
+                      DRV_UART1_Wizard_Init();
+                  #endif
+ 134   1      
+ 135   1          #if MG82F6D17_ADC_WIZARD
+                      __DRV_ADC_Wizard_Init();
+                  #endif
+ 138   1      
+ 139   1          #if MG82F6D17_INT_ALL_WIZARD
+                      __DRV_INTERRUPT_Wizard_Init();
+                  #endif
+ 142   1      }
+ 143          
+ 144          /// @endcond
+ 145          /**
+ 146           *******************************************************************************
+ 147           *
+ 148           *
+ 149           *
+ 150           * UART Initialization Function
+ 151           *
+ 152           *
+ 153           *
+ 154           *******************************************************************************
+ 155           */
+ 156          
+ 157          
+ 158          #if MG82F6D17_UART0_WIZARD
+              /**
+              *******************************************************************************
+              * @brief       UART0 Initial.
+              * @details    Wizard Option
+              * @param[in]   ::
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              * @return      NO
+              * @exception   NO
+              * @note
+              * @par         Example
+              * @code
+              DRV_UART0_Wizard_Init();
+              * @endcode
+C51 COMPILER V9.60.0.0   MG82F6D17_WIZARD                                                  01/25/2022 14:59:16 PAGE 4   
+
+              *******************************************************************************
+              */
+              void DRV_UART0_Wizard_Init(void)
+              {
+                  #if(URT0_Advance_Mode&&URT0_Option)
+                      #if(URT0_Advance)
+                          #if(URT0_Mode==0x01)
+                              #if(URT0_Mode1_8Bit)
+                                  #if(URT0_Mode1_8Bit_Baud_Rate_Config)
+                                      __DRV_URT0_Mode1_Wizard_Init();
+                                  #endif
+                              #endif
+                          #elif(URT0_Mode==0x02)
+                              #if(URT0_Mode2_9Bit)
+                                  #if(URT0_Mode2_9Bit_Baud_Rate_Config)
+                                      __DRV_URT0_Mode2_Wizard_Init();
+                                  #endif
+                              #endif
+                          #endif
+                      #endif
+                  #endif
+                  #if(URT0_Easy_Mode&&(!URT0_Option))
+                      #if(URT0_Easy)
+                          __DRV_URT0_Easy_Wizard_Init();
+                      #endif
+                  #endif
+                TI0=1;//for printf application;
+              }
+              #endif
+ 206          #if MG82F6D17_UART1_WIZARD
+              /**
+              *******************************************************************************
+              * @brief       UART1 Initial.
+              * @details    Wizard Option
+              * @param[in]   ::
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              *  @arg\b
+              * @return      NO
+              * @exception   NO
+              * @note
+              * @par         Example
+              * @code
+              DRV_UART1_Wizard_Init();
+              * @endcode
+              *******************************************************************************
+              */
+              void DRV_UART1_Wizard_Init(void)
+              {
+                  #if(URT1_Advance_Mode&&URT1_Option)
+                      #if(URT1_Advance)
+                          #if(URT1_Mode==0x01)
+                              #if(URT1_Mode1_8Bit)
+                                  #if(URT1_Mode1_8Bit_Baud_Rate_Config)
+                                      __DRV_URT1_Mode1_Wizard_Init();
+                                  #endif
+                              #endif
+                          #elif(URT1_Mode==0x02)
+                              #if(URT1_Mode2_9Bit)
+C51 COMPILER V9.60.0.0   MG82F6D17_WIZARD                                                  01/25/2022 14:59:16 PAGE 5   
+
+                                  #if(URT1_Mode2_9Bit_Baud_Rate_Config)
+                                      __DRV_URT1_Mode2_Wizard_Init();
+                                  #endif
+                              #endif
+                          #endif
+                      #endif
+                  #endif
+                  #if(URT1_Easy_Mode&&(!URT1_Option))
+                      #if(URT1_Easy)
+                          __DRV_URT1_Easy_Wizard_Init();
+                      #endif
+                  #endif
+              }
+              #endif
+ 253          
+ 254          
+ 255          
+ 256          
+ 257          
+ 258          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    229    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

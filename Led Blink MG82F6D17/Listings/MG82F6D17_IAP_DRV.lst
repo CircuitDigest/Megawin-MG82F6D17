@@ -1,0 +1,157 @@
+C51 COMPILER V9.60.0.0   MG82F6D17_IAP_DRV                                                 01/25/2022 14:59:16 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MG82F6D17_IAP_DRV
+OBJECT MODULE PLACED IN .\Objects\MG82F6D17_IAP_DRV.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\Driver\Source\MG82F6D17_IAP_DRV.c OPTIMIZE(8,SPEED) BROWSE INCDIR
+                    -(.\Source;.\Source\Driver\Include;.\Source\Driver\Source;.\Source\Middleware\Include;.\Source\Middleware\Source) DEBUG O
+                    -BJECTEXTEND PRINT(.\Listings\MG82F6D17_IAP_DRV.lst) TABS(2) OBJECT(.\Objects\MG82F6D17_IAP_DRV.obj)
+
+line level    source
+
+   1          /**
+   2           ******************************************************************************
+   3           *
+   4           * @file        MG82F6D17_IAP_DRV.c
+   5           *
+   6           * @brief       This is the C code format driver file.
+   7           *
+   8           * @par         Project
+   9           *              MA82F6D17
+  10           * @version     V0.03
+  11           * @date        2020/01/22
+  12           * @author      Megawin Software Center
+  13           * @copyright   Copyright (c) 2019 MegaWin Technology Co., Ltd.
+  14           *              All rights reserved.
+  15           *
+  16           ******************************************************************************
+  17           * @par     Disclaimer
+  18           *    The Demo software is provided "AS IS" without any warranty, either
+  19           *    expressed or implied, including, but not limited to, the implied warranties
+  20           *    of merchantability and fitness for a particular purpose.  The author will
+  21           *    not be liable for any special, incidental, consequential or indirect
+  22           *    damages due to loss of data or any other reason.
+  23           *    These statements agree with the worldwide and local dictated laws about
+  24           *    authorship and violence against these laws.
+  25           ******************************************************************************
+  26           ******************************************************************************
+  27           */
+  28          
+  29          /// @cond __DRV_IAP_C_Without_Doxygen
+  30          #include "MG82F6D17_CONFIG.h"
+  31          /// @endcond
+  32          
+  33          #if MG82F6D17_IAP_WIZARD
+              
+              uint8_t DRV_IAP_GetStatus()
+              {
+                  uint8_t ISPCR_Buf;
+                  ISPCR_Buf = ISPCR & CFAIL;
+                  ISPCR &= ~CFAIL;
+                  return ISPCR_Buf;
+              }
+              
+              uint8_t DRV_IAP_PageErase(uint8_t ADDR)
+              {
+                  uint8_t Status;
+                  ISPCR |= ISPEN;
+                  IFMT = IFMT_IAP_PAGE_ERASE;
+                  IFADRH = ADDR & 0xFE;
+                  IFADRL = 0x00;
+                  SCMD   = 0x46;
+                  SCMD   = 0xB9;
+                  IFMT = IFMT_STANDBY;
+                  ISPCR  &= ~ISPEN;
+C51 COMPILER V9.60.0.0   MG82F6D17_IAP_DRV                                                 01/25/2022 14:59:16 PAGE 2   
+
+                  Status = DRV_IAP_GetStatus();
+                  return Status;
+              }
+              
+              uint8_t DRV_IAP_PageEraseWithoutIT(uint8_t ADDR)
+              {
+                  uint8_t Status;
+                  _push_(IE);
+                  EA = 0;
+                  DRV_IAP_PageErase(ADDR);
+                  _pop_(IE);
+                  return Status;
+              
+              }
+              
+              #define IFMT_IAP_PROGRAM                    0x02
+              #define IFMT_FLASH_PROGRAM_INC_IFADR        0x82
+              uint8_t DRV_IAP_ByteProgram(uint8_t MODE, uint16_t ADDR, uint8_t DATA)
+              {
+                  uint8_t Status;
+                  ISPCR |= ISPEN;
+                  IFMT = MODE;
+                  IFADRH = ADDR>>8;
+                  IFADRL = ADDR;
+                  IFD = DATA;
+                  SCMD = 0x46;
+                  SCMD = 0xB9;
+                  IFMT = IFMT_STANDBY;
+                  ISPCR &= ~ISPEN;
+                  IFD = 0;
+                  return Status;
+              }
+              
+              #define IFMT_IAP_PROGRAM                    0x02
+              #define IFMT_FLASH_PROGRAM_INC_IFADR        0x82
+              uint8_t DRV_IAP_ByteProgramWithoutIT(uint8_t MODE, uint16_t ADDR, uint8_t DATA)
+              {
+                  uint8_t Status;
+                  _push_(IE);
+                  EA = 0;
+                  DRV_IAP_ByteProgram(MODE, ADDR, DATA);
+                  _pop_(IE);
+                  return Status;
+              }
+              
+              
+              #define IFMT_IAP_READ                       0x01
+              #define IFMT_FLASH_READ_INC_IFADR           0x81
+              
+              uint8_t DRV_IAP_FlashRead(uint8_t MODE, uint16_t ADDR)
+              {
+                  ISPCR |= ISPEN;
+                  IFMT = MODE;
+                  IFADRH   = ADDR>>8;
+                  IFADRL   = ADDR;
+              
+                  SCMD     = 0x46;
+                  SCMD     = 0xB9;
+                  IFMT = IFMT_STANDBY;
+                  ISPCR  &= ~ISPEN;
+                  return IFD;
+              }
+C51 COMPILER V9.60.0.0   MG82F6D17_IAP_DRV                                                 01/25/2022 14:59:16 PAGE 3   
+
+              
+              #define IFMT_IAP_READ                       0x01
+              #define IFMT_FLASH_READ_INC_IFADR           0x81
+              uint8_t DRV_IAP_FlashReadWithoutIT(uint8_t MODE, uint16_t ADDR)
+              {
+                  uint8_t  IFD_BUF;
+                  _push_(IE);
+                  EA = 0;
+                  IFD_BUF = DRV_IAP_FlashRead(MODE, ADDR);
+                  _pop_(IE);
+                  return  IFD_BUF;
+              }
+              #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,9 @@
+".\Objects\MAIN.obj",
+".\Objects\MG82F6D17_COMMON_DRV.obj",
+".\Objects\MG82F6D17_IAP_DRV.obj",
+".\Objects\MG82F6D17_INTERRUPT.obj",
+".\Objects\MG82F6D17_WIZARD.obj" 
+TO ".\Objects\Sample" 
+PRINT(".\Listings\Sample.m51") RAMSIZE(256) 
+CODE( 0X0000-0X3FFF )
+XDATA( 0X0000-0X02FF )
